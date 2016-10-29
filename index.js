@@ -76,6 +76,7 @@ function Ship(position, width, height) {
 
 function StarsEffect(starsCount, width, height) {
     const STAR_SPEED = 300.0;
+    // TODO: change direction with mouse
     const DIRECTION = [-0.50, -1.0];
 
     this.stars = [];
@@ -113,7 +114,7 @@ function StarsEffect(starsCount, width, height) {
     let width = canvas.width;
     let height = canvas.height;
 
-    let starsEffect = new StarsEffect(150, width, height);
+    let starsEffect = new StarsEffect(500, width, height);
     let ship = new Ship(height / 2, width, height);
     let deltaTime = 33;
     
