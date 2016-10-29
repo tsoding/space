@@ -11,6 +11,7 @@ function Ship(position, width, height) {
 
 function StarsEffect(starsCount, width, height) {
     const STAR_SPEED = 300.0;
+    const DIRECTION = [-1, 0];
 
     this.stars = [];
 
@@ -20,9 +21,11 @@ function StarsEffect(starsCount, width, height) {
 
     this.update = function(deltaTime) {
         this.stars.forEach(function(star) {
-            star[0] -= STAR_SPEED * star[2] * (deltaTime * 0.001);
+            star[0] += DIRECTION[0] * STAR_SPEED * star[2] * (deltaTime * 0.001);
+            star[1] += DIRECTION[1] * STAR_SPEED * star[2] * (deltaTime * 0.001);
 
-            if (star[0] < 0) {
+            if (star[0] < 0 || star[0] >= width || star[1] < 0 || star[1] >= height) {
+                // TODO: regenerate star according to the DIRECTION
                 star[0] = width;
                 star[1] = Math.random() * height;
                 star[2] = Math.random();
