@@ -11,6 +11,7 @@ function is_zero(x) {
 }
 
 function snap_with_direction(point, direction, width, height) {
+    // TODO: try to implement axis snapping without tables
     const snappers =
               [or(snap_axis(0, 0), snap_axis(1, 0)),
                or(snap_axis(0, width), snap_axis(1, 0)),
