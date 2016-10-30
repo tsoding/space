@@ -117,6 +117,8 @@ function GameConsole(documentId) {
 
     let entities = [];
 
+    // TODO: do not expose geometry of the game console. Such things
+    // should be properly communicated between the entities.
     this.width = canvas.width;
     this.height = canvas.height;
 
