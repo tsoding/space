@@ -78,6 +78,7 @@ function Ship(position, width, height) {
 function StarsEffect(starsCount, width, height) {
     const STAR_SPEED = 300.0;
     // TODO: change direction with mouse
+    // http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
     const DIRECTION = [-0.50, -1.0];
 
     this.stars = [];
