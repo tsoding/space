@@ -110,29 +110,34 @@ function StarsEffect(starsCount, width, height) {
 } 
 
 (function() {
+    const deltaTime = 33;
+
     let canvas = document.getElementById("space");
     let context = canvas.getContext("2d");
     let width = canvas.width;
     let height = canvas.height;
 
-    let starsEffect = new StarsEffect(500, width, height);
-    let ship = new Ship(height / 2, width, height);
-    let deltaTime = 33;
-    
+    let entities = [
+        new StarsEffect(500, width, height),
+        new Ship(height / 2, width, height)
+    ];
+
     function clearView() {
         context.fillStyle = "black";
         context.fillRect(0, 0, width, height);
     }
 
     function update() {
-        starsEffect.update(deltaTime);
-        ship.update(deltaTime);
+        entities.forEach(function(entity) {
+            entity.update(deltaTime);
+        });
     }
 
     function render() {
         clearView();
-        starsEffect.render(context);
-        ship.render(context);
+        entities.forEach(function(entity) {
+            entity.render(context);
+        });
     }
 
     function eventLoop() {
