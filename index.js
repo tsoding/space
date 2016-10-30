@@ -109,22 +109,20 @@ function StarsEffect(starsCount, width, height) {
     };
 } 
 
-(function() {
+function GameConsole(documentId) {
     const deltaTime = 33;
 
-    let canvas = document.getElementById("space");
+    let canvas = document.getElementById(documentId);
     let context = canvas.getContext("2d");
-    let width = canvas.width;
-    let height = canvas.height;
 
-    let entities = [
-        new StarsEffect(500, width, height),
-        new Ship(height / 2, width, height)
-    ];
+    let entities = [];
+
+    this.width = canvas.width;
+    this.height = canvas.height;
 
     function clearView() {
         context.fillStyle = "black";
-        context.fillRect(0, 0, width, height);
+        context.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     function update() {
@@ -145,6 +143,21 @@ function StarsEffect(starsCount, width, height) {
         render();
         setTimeout(eventLoop, deltaTime);
     }
-    setTimeout(eventLoop, deltaTime);
 
+    this.start = function() {
+        setTimeout(eventLoop, deltaTime);
+    };
+
+    this.addEntity = function(entity) {
+        entities.push(entity);
+    };
+}
+
+(function() {
+    let gameConsole = new GameConsole("space");
+
+    gameConsole.addEntity(new StarsEffect(500, gameConsole.width, gameConsole.height));
+    gameConsole.addEntity(new Ship(gameConsole.height / 2, gameConsole.width, gameConsole.height));
+
+    gameConsole.start();
 })();
