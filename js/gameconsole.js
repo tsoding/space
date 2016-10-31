@@ -3,8 +3,10 @@ function GameConsole(documentId) {
 
     let canvas = document.getElementById(documentId);
     let context = canvas.getContext("2d");
-    let width = canvas.width;
-    let height = canvas.height;
+
+    // TODO: detect window resize
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
     let entities = [];
     let mouseMoveListeners = [];
@@ -46,7 +48,7 @@ function GameConsole(documentId) {
     };
 
     this.addEntity = function(entity) {
-        entity.init(width, height);
+        entity.init(canvas.width, canvas.height);
         entities.push(entity);
     };
 
