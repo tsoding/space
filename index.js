@@ -64,18 +64,19 @@ function nothing() {
     return function(x) {};
 }
 
-function Ship(position, width, height) {
-
-    this.position = position;
+function Ship() {
 
     this.render = function(context) {
     };
 
     this.update = function(deltaTime) {
     };  
+
+    this.init = function(width, height) {
+    };
 }
 
-function StarsEffect(starsCount, width, height) {
+function StarsEffect(starsCount) {
     const STAR_SPEED = 300.0;
     // TODO: change direction with mouse
     // http://www.html5canvastutorials.com/advanced/html5-canvas-mouse-coordinates/
@@ -83,23 +84,19 @@ function StarsEffect(starsCount, width, height) {
 
     this.stars = [];
 
-    for (let i = 0; i < starsCount; ++i) {
-        this.stars.push([Math.random() * width, Math.random() * height, Math.random()]);
-    }
-
     this.update = function(deltaTime) {
         this.stars.forEach(function(star) {
             star[0] += DIRECTION[0] * STAR_SPEED * star[2] * (deltaTime * 0.001);
             star[1] += DIRECTION[1] * STAR_SPEED * star[2] * (deltaTime * 0.001);
 
-            if (star[0] < 0 || star[0] >= width || star[1] < 0 || star[1] >= height) {
-                star[0] = Math.random() * width;
-                star[1] = Math.random() * height;
+            if (star[0] < 0 || star[0] >= this.width || star[1] < 0 || star[1] >= this.height) {
+                star[0] = Math.random() * this.width;
+                star[1] = Math.random() * this.height;
                 star[2] = Math.random();
 
-                snap_with_direction(star, DIRECTION, width, height);
+                snap_with_direction(star, DIRECTION, this.width, this.height);
             }
-        });
+        }.bind(this));
     };
 
     this.render = function(context) {
@@ -108,6 +105,15 @@ function StarsEffect(starsCount, width, height) {
             context.fillRect(star[0], star[1], star[2] * 5, star[2] * 5);
         });
     };
+
+    this.init = function(width, height) {
+        this.width = width;
+        this.height = height;
+
+        for (let i = 0; i < starsCount; ++i) {
+            this.stars.push([Math.random() * width, Math.random() * height, Math.random()]);
+        }
+    };
 } 
 
 function GameConsole(documentId) {
@@ -115,13 +121,10 @@ function GameConsole(documentId) {
 
     let canvas = document.getElementById(documentId);
     let context = canvas.getContext("2d");
+    let width = canvas.width;
+    let height = canvas.height;
 
     let entities = [];
-
-    // TODO: do not expose geometry of the game console. Such things
-    // should be properly communicated between the entities.
-    this.width = canvas.width;
-    this.height = canvas.height;
 
     function clearView() {
         context.fillStyle = "black";
@@ -152,6 +155,7 @@ function GameConsole(documentId) {
     };
 
     this.addEntity = function(entity) {
+        entity.init(width, height);
         entities.push(entity);
     };
 }
@@ -159,8 +163,8 @@ function GameConsole(documentId) {
 (function() {
     let gameConsole = new GameConsole("space");
 
-    gameConsole.addEntity(new StarsEffect(500, gameConsole.width, gameConsole.height));
-    gameConsole.addEntity(new Ship(gameConsole.height / 2, gameConsole.width, gameConsole.height));
+    gameConsole.addEntity(new StarsEffect(500));
+    gameConsole.addEntity(new Ship());
 
     gameConsole.start();
 })();
