@@ -7,6 +7,15 @@ function GameConsole(documentId) {
     let height = canvas.height;
 
     let entities = [];
+    let mouseMoveListeners = [];
+
+    canvas.addEventListener('mousemove', function(evt) {
+        let rect = canvas.getBoundingClientRect();
+        let position = [evt.clientX - rect.left, evt.clientY - rect.top];
+        mouseMoveListeners.forEach(function(listener) {
+            listener.onMouseMove(position);
+        });
+    });
 
     function clearView() {
         context.fillStyle = "black";
@@ -39,5 +48,9 @@ function GameConsole(documentId) {
     this.addEntity = function(entity) {
         entity.init(width, height);
         entities.push(entity);
+    };
+
+    this.addMouseMoveListener = function(listener) {
+        mouseMoveListeners.push(listener);
     };
 }

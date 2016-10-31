@@ -36,4 +36,8 @@ function StarsEffect(starsCount) {
             this.stars.push([Math.random() * width, Math.random() * height, Math.random()]);
         }
     };
+
+    this.onMouseMove = function(position) {
+        console.log("From stars: " + position);
+    };
 }
