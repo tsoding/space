@@ -20,7 +20,7 @@ function GameConsole(documentId) {
     });
 
     function clearView() {
-        context.fillStyle = "black";
+        context.fillStyle = "#151515";
         context.fillRect(0, 0, canvas.width, canvas.height);
     }
 
