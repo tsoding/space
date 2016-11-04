@@ -3,15 +3,19 @@ function Ship() {
     let speed = [0, 0];
     let velocityListeners = [];
 
+    const WING_SHIFT = Math.PI * 3 / 4;
+
     this.render = function(context) {
+        const speedShift = magnify_vector(speed, 0.05);
+        const tip = vector_sum(vector_sum(magnify_vector(angle_to_vector(heading), 40), this.screenCenter), speedShift);
+        const leftWing = vector_sum(vector_sum(magnify_vector(angle_to_vector(heading + WING_SHIFT), 20), this.screenCenter), speedShift);
+        const rightWing = vector_sum(vector_sum(magnify_vector(angle_to_vector(heading - WING_SHIFT), 20), this.screenCenter), speedShift);
+
         context.fillStyle = "#afefef";
         context.beginPath();
-        context.moveTo(Math.cos(heading) * 40 + this.width / 2 + speed[0] * 0.05, 
-                       Math.sin(heading) * 40 + this.height / 2 + speed[1] * 0.05);
-        context.lineTo(Math.cos(heading + Math.PI * 3 / 4) * 20 + this.width / 2 + speed[0] * 0.05,
-                       Math.sin(heading + Math.PI * 3 / 4) * 20 + this.height / 2 + speed[1] * 0.05);
-        context.lineTo(Math.cos(heading - Math.PI * 3 / 4) * 20 + this.width / 2 + speed[0] * 0.05,
-                       Math.sin(heading - Math.PI * 3 / 4) * 20 + this.height / 2 + speed[1] * 0.05);
+        context.moveTo(tip[0], tip[1]);
+        context.lineTo(leftWing[0], leftWing[1]);
+        context.lineTo(rightWing[0], rightWing[1]);
         context.fill();
     };
 
@@ -21,6 +25,7 @@ function Ship() {
     this.init = function(width, height) {
         this.width = width;
         this.height = height;
+        this.screenCenter = [this.width / 2, this.height / 2];
     };
 
     this.onMouseMove = function(position) {

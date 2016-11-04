@@ -6,6 +6,16 @@ function vector_angle(v) {
     return Math.atan2(v[1], v[0]);
 }
 
+function vector_sum(v1, v2) {
+    return [v1[0] + v2[0],
+            v1[1] + v2[1]];
+}
+
+function angle_to_vector(angle) {
+    return [Math.cos(angle),
+            Math.sin(angle)];
+}
+
 function normalize_vector(v) {
     let l = vector_length(v);
     return [v[0] / l, v[1] / l];
