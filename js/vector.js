@@ -29,3 +29,11 @@ function snap_with_direction(point, direction, width, height) {
         }
     }
 }
+
+function negative_vector(vector) {
+    return [-vector[0], -vector[1]];
+}
+
+function magnify_vector(vector, factor) {
+    return [vector[0] * factor, vector[1] * factor];
+}
