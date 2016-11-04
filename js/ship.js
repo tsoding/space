@@ -27,7 +27,5 @@ function Ship() {
                          position[1] - this.height / 2];
         heading = vector_angle(direction);
         speed = [direction[0] * 0.05, direction[1] * 0.05];
-
-        console.log(speed);
     };
 }
