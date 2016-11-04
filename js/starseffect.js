@@ -23,6 +23,34 @@ function StarsEffect(starsCount) {
             context.fillStyle = "#efefef";
             context.fillRect(star[0], star[1], star[2] * 5, star[2] * 5);
         });
+
+        // TODO: extract distribution grid to a separate component
+
+        let gridSize = 10;
+        let stats = [];
+
+        for (let i = 0; i < gridSize; ++i) {
+            stats.push(0);
+        }
+
+        this.stars.forEach(function(star) {
+            stats[Math.floor(star[2] / (1 / gridSize))]++;
+        });
+
+        function rgb(r, g, b) {
+            r = Math.floor(r);
+            g = Math.floor(g);
+            b = Math.floor(b);
+            return ["rgb(",r,",",g,",",b,")"].join("");
+        }
+
+        let barWidth = 20;
+        let barMaxHeight = 200;
+
+        // for (let i = 0; i < gridSize; ++i) {
+        //     context.fillStyle = rgb(stats[i] / (starsCount / (gridSize / 2)) * 255, 200, 100);
+        //     context.fillRect(i * barWidth, 0, barWidth, stats[i] / starsCount * barMaxHeight);
+        // }
     };
 
     this.init = function(width, height) {
