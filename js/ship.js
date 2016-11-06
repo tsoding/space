@@ -7,9 +7,16 @@ function Ship() {
 
     this.render = function(context) {
         const speedShift = magnify_vector(speed, 0.05);
-        const tip = vector_sum(vector_sum(magnify_vector(angle_to_vector(heading), 40), this.screenCenter), speedShift);
-        const leftWing = vector_sum(vector_sum(magnify_vector(angle_to_vector(heading + WING_SHIFT), 20), this.screenCenter), speedShift);
-        const rightWing = vector_sum(vector_sum(magnify_vector(angle_to_vector(heading - WING_SHIFT), 20), this.screenCenter), speedShift);
+
+        let transform = (function(angle, len) {
+            return vector_sum(magnify_vector(angle_to_vector(angle), len),
+                              this.screenCenter,
+                              speedShift);
+        }).bind(this);
+
+        const tip = transform(heading, 40);
+        const leftWing = transform(heading + WING_SHIFT, 20);
+        const rightWing = transform(heading - WING_SHIFT, 20);
 
         context.fillStyle = "#afefef";
         context.beginPath();
