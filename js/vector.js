@@ -6,9 +6,15 @@ function vector_angle(v) {
     return Math.atan2(v[1], v[0]);
 }
 
-function vector_sum(v1, v2) {
-    return [v1[0] + v2[0],
-            v1[1] + v2[1]];
+function vector_sum(v1, ...vs) {
+    let result = v1.slice();
+
+    vs.forEach(function(v) {
+        result[0] += v[0];
+        result[1] += v[1];
+    });
+
+    return result;
 }
 
 function angle_to_vector(angle) {
