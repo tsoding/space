@@ -7,7 +7,7 @@
 
     gameConsole.addEntity(stars);
     gameConsole.addEntity(ship);
-    
+
     gameConsole.addMouseMoveListener(ship);
 
     gameConsole.start();

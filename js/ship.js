@@ -27,7 +27,7 @@ function Ship() {
     };
 
     this.update = function(deltaTime) {
-    };  
+    };
 
     this.init = function(width, height) {
         this.width = width;
@@ -36,7 +36,7 @@ function Ship() {
     };
 
     this.onMouseMove = function(position) {
-        let direction = [position[0] - this.width / 2, 
+        let direction = [position[0] - this.width / 2,
                          position[1] - this.height / 2];
         heading = vector_angle(direction);
         speed = [direction[0], direction[1]];
